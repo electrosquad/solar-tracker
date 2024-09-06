@@ -131,7 +131,7 @@ button:hover {
 /* Chart Canvas */
 canvas {
     width: 100% !important; /* Make sure canvas takes full width */
-    height: 80% !important; /* Make sure canvas takes full height */
+    height: 70% !important; /* Make sure canvas takes full height */
     display: block; /* Ensure canvas is displayed as a block element */
     background-color: #ffffff;
     border-radius: 8px;
