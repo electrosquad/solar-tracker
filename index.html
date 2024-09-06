@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="refresh" content="10"> 
+    <title>SMART SOLAR - IoT Project</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- <img class="bg-img" src="./Solar_Project_Finance_Modeling_RVI_1400x788 (1).png" alt=""> -->
+     <video class="main-bg" src="main-bg.mp4" autoplay loop muted></video>
+    <header>
+        <div id="navbar">
+            <a id="logo"></a>
+            <div class="navbar-content">
+                <a href="#">Photos</a>
+                <a href="#">Videos</a>
+                <a href="team.html">Team Members</a>
+                <a href="https://www.google.com/">Report</a>
+            </div>
+        </div>
+    </header>
+
+    
+
+    <div class="container">
+        <h1>SMART SOLAR</h1>
+        <div class="main-container">
+            <div class="chart-container">
+                <h2>Voltage</h2>
+                <canvas id="chart1"></canvas>
+                <div class="latest-value1 latest-value">Latest Value: </div>
+            </div>
+            <div class="chart-container">
+                <h2>Current</h2>
+                <canvas id="chart2"></canvas>
+                <div class="latest-value2 latest-value">Latest Value: </div>
+            </div>
+            <div class="chart-container">
+                <h2>Power</h2>
+                <canvas id="chart3"></canvas>
+                <div class="latest-value3 latest-value">Latest Value: </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchData(fieldNumber) {
+            const channelId = '2621783';
+            const readApiKey = 'GFEW1GYYJAGDTIJT';
+            const url = `https://api.thingspeak.com/channels/${channelId}/fields/${fieldNumber}.json?api_key=${readApiKey}&results=20`;
+
+            const response = await fetch(url);
+            const data = await response.json();
+            //let plotdata = data.feeds.map(e => e[`field${fieldNumber}`]);
+            //console.log(plotdata);
+            return data.feeds;
+        }
+
+        function createChart(chartId,labels, data, title) {
+            //console.log(data);
+            const ctx = document.getElementById(chartId).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data,
+                    datasets: [{
+                        label: title,
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: title
+                        }
+                    }
+                }
+            });
+
+            let latest1 = document.getElementsByClassName('latest-value1')[0]
+            let latest2 = document.getElementsByClassName('latest-value2')[0]
+            let latest3 = document.getElementsByClassName('latest-value3')[0]
+            console.log(latest1);
+
+            if(chartId === 'chart1'){
+                console.log("called1");
+                latest1.textContent = `Latest Value: ${data[0]}`;
+            }
+            if(chartId === 'chart2'){
+                console.log("called2");
+                latest2.textContent = `Latest Value: ${data[0]}`;
+            }
+            if(chartId === 'chart3'){
+                console.log("called3");
+                latest3.textContent = `Latest Value: ${data[0]}`;
+            }
+        }
+
+        async function renderCharts() {
+            const titles = ['Voltage', 'Current', 'Power'];
+            for (let i = 1; i <= 3; i++) {
+                const data = await fetchData(i);
+                
+                const filteredData = data.filter(feed => feed[`field${i}`] !== undefined && !isNaN(feed[`field${i}`]));
+                const labels = filteredData.map(feed => new Date(feed.created_at).toLocaleString());
+                //console.log(labels);
+                const values = filteredData.map(feed => parseFloat(feed[`field${i}`]));
+                //console.log(values);
+                createChart(`chart${i}`,labels, values, titles[i - 1]);
+            }
+        }
+
+        renderCharts();
+    </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+/* General Reset and Base Styles */
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+    /* background-color: #29343d; */
+    color: #ffffff;
+    overflow: hidden;
+}
+
+/* Body and Main Title */
+body {
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+}
+
+.main-bg{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -99;
+    object-fit: cover;
+    filter: blur(5px);
+}
+
+h1 {
+    font-size: 5em;
+    letter-spacing: 0.5rem;
+    margin: 2rem 0;
+    color: aqua;
+}
+
+/* Navbar Styles */
+#navbar {
+    background-color: black;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+.bg-img{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -99;
+    filter: blur(5px);
+}
+
+.navbar-content{
+    display: flex;
+    text-transform: uppercase;
+}
+#logo {
+    color: #f08804;
+    font-size: 30px;
+    font-family: cursive;
+}
+
+a {
+    margin: 0 15px;
+    color: whitesmoke;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+a:hover {
+    color: #f08804;
+    transform: scale(1.1);
+}
+
+button {
+    background-color: #f08804;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #e07b00;
+    transform: scale(1.05);
+}
+.container{
+    height: 100vh;
+    width: 100vw;
+}
+/* Main Container */
+.main-container {
+    height: 60%;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 2rem;
+    color: #717388;
+    font-size: 1.2rem;
+    display: flex;
+
+    justify-content: space-between;
+    background: rgba(107, 107, 107, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Chart Container */
+.chart-container {
+    background-color: #34495e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    width: 30%;
+    height: 100%; /* Adjusted height for larger charts */
+}
+
+.chart-container h2 {
+    color: #f08804;
+    margin-bottom: 1rem;
+}
+
+/* Chart Canvas */
+canvas {
+    width: 100% !important; /* Make sure canvas takes full width */
+    height: 80% !important; /* Make sure canvas takes full height */
+    display: block; /* Ensure canvas is displayed as a block element */
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+.latest-value{
+    margin-top: 10px;
+}
+
+/* Grid Item Styles */
+.grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #2c3e50;
+    border-radius: 8px;
+    padding: 1rem;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.grid-item:hover {
+    color: #ffffff;
+    background-color: #34495e;
+}
+
+/* Responsive Layout Adjustments */
+@media (max-width: 768px) {
+    .main-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    #navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    a {
+        margin: 5px 0;
+    }
+}
